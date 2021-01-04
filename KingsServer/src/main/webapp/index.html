@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Start Page</title>
+        <title>杭打キングモニタ</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js"></script>
     </head>
     <body>
-        <h1>PiledriverKing Monitor #2</h1>
-        <div id="output"></div>
-        <canvas id="myCanvas" width="500" height="800" style="border:1px solid #000000;"></canvas>
+        <h1>杭打キングモニタ</h1>
+        <main id="app">
+        <Table>
+            <TR>
+                <TD><div id="output"></div></TD>
+            </TR>
+            <TR>
+                <TD><div id="name">杭番号:</div></TD>
+                <TD><div id="stage">工程:</div></TD>
+            </TR>
+            <TR><TD id="date"></TR>
+        </Table>
+            <!-- ここにPixiの描画領域(Canvas)が入る -->
+        </main>
         <script type="text/javascript" src="Websocket.js"></script>
         <script type="text/javascript" src="monitor.js"></script>
+        
+        <script>
+        </script>
     </body>
 </html>

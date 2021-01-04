@@ -35,6 +35,6 @@ function sendText(json) {
                 
 function onMessage(evt) {
     console.log("received: " + evt.data);
-    drawImageText(evt.data);
+    updateView(evt.data);
 }
 
