@@ -1,0 +1,4 @@
+com\kinsoku\kingsserver\JsonSurveyDataEncoder.class
+com\kinsoku\kingsserver\KingsServer.class
+com\kinsoku\kingsserver\JsonSurveyData.class
+com\kinsoku\kingsserver\JsonSurveyDataDecoder.class
