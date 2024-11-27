@@ -19,7 +19,7 @@ public class JsonSurveyData {
     
     private String name;
     private String date;
-    private String stage;
+    private String process;
     private double x;
     private double y;
     private double z;
@@ -33,7 +33,7 @@ public class JsonSurveyData {
     public JsonSurveyData(String name, String date, String stage, double x, double y, double z, double difX, double difY, double difZ, double katamukiX, double katamukiY) {
         this.name = name;
         this.date = date;
-        this.stage = stage;
+        this.process = stage;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -125,11 +125,11 @@ public class JsonSurveyData {
     }
 
     public String getStage() {
-        return stage;
+        return process;
     }
 
     public void setStage(String stage) {
-        this.stage = stage;
+        this.process = stage;
     }
     
 

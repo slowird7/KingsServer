@@ -21,6 +21,8 @@ let app = new PIXI.Application({
 // HTMLの<main id="app"></main>の中に上で作ったPIXIアプリケーション(app)のビュー(canvas)を突っ込む
 let el = document.getElementById('app');
 el.appendChild(app.view);
+let name = document.getElementById("name");
+let process = document.getElementById("process");
 
 // 座標軸
 var axisX = new PIXI.Graphics().lineStyle(2,0x000000).moveTo(0,200).lineTo(640,200);
@@ -45,7 +47,7 @@ redMark.pivot.y = -200;
 redMark.x = 0;
 redMark.y = 0;
 app.stage.addChild(redMark);
-updateView('{"name": "AAA", "stage": "BBB", "difX": 100, "difY": 0 }');
+updateView('{"name": "杭01", "process": "削孔", "difX": 100, "difY": 0 }');
 
 function updateView(surveyData) {
     console.log("updateView");
@@ -53,11 +55,10 @@ function updateView(surveyData) {
     var json = JSON.parse(surveyData);
 //    context.fillStyle = json.color;
     name.innerHTML = "杭番号:" + json.name;
-    stage.innerHTML = "工程:" + json.stage;
+    process.innerHTML = "工程:" + json.process;
     redMark.x = json.difX;
     redMark.y = json.difY;
 //    context.beginPath();
-//    context.arc(json.difX * 1000 + 500, json.difY * 1000 + 500, 5, 0, 2 * Math.PI, false);
-//    context.fill();
-    
+//    context.arc(json.difX * 1000 + 500, json.difY * 1000 + 500, 5, 0, 2
 }
+

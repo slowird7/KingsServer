@@ -8,7 +8,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js"></script>
     </head>
     <body>
+        <%=new java.util.Date()%>
         <h1>杭打キングモニタ</h1>
+        <name id="name"></name>
+        <name id="process"></name>
         <main id="app">
         </main>
         <!--script type="text/javascript" src="Websocket.js"></script-->

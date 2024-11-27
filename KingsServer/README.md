@@ -18,6 +18,6 @@ WebSocket Java Server &amp; Java Client
 
 # How to Run Client from JavaScript?
 
-	http://localhost:8080/hello-websocket/index.jsp
+	http://localhost:8080/KingServer/index.jsp
 
 	
