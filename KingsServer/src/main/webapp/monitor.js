@@ -49,6 +49,15 @@ redMark.y = 0;
 app.stage.addChild(redMark);
 updateView('{"name": "杭01", "process": "削孔", "difX": 100, "difY": 0 }');
 
+// websocket を作成する
+const socket = new WebSocket('ws://localhost:8080/kingserver/endpoint');
+// 接続する時にトリガーされる 
+socket.onopen = () => {   console.log('Connected to server'); }  // ここでメッセージ送信のロジックを追加 };
+// メッセージの受信時にトリガーされる 
+socket.onmessage = (event) => {   console.log(`Received: ${event.data}`); };
+// 接続中止時にトリガーされる 
+socket.onclose = () => {   console.log('Connection closed'); };
+
 function updateView(surveyData) {
     console.log("updateView");
     console.log(surveyData);
