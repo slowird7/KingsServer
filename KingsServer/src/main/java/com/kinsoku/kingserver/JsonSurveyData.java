@@ -5,11 +5,17 @@
  */
 package com.kinsoku.kingserver;
 
-//import javax.json.Json;
-//import javax.json.JsonException;
-//import javax.json.JsonObject;
-//import javax.json.stream.JsonGenerator;
-
+import java.io.StringReader;
+import java.io.StringWriter;
+import javax.json.Json;
+import javax.json.JsonException;
+import javax.json.JsonObject;
+import javax.json.stream.JsonGenerator;
+import javax.websocket.DecodeException;
+import javax.websocket.Decoder;
+import javax.websocket.EncodeException;
+import javax.websocket.Encoder;
+import javax.websocket.EndpointConfig;
 
 /**
  *
@@ -30,10 +36,10 @@ public class JsonSurveyData {
     private double thY;
 
     // surveyX, surveyY, surveyZ, difX_MM / 1000., difY_MM / 1000., difZ_MM / 1000., katamukiX, katamukiY, name, ""
-    public JsonSurveyData(String name, String date, String stage, double x, double y, double z, double difX, double difY, double difZ, double katamukiX, double katamukiY) {
+    public JsonSurveyData(String name, String date, String process, double x, double y, double z, double difX, double difY, double difZ, double katamukiX, double katamukiY) {
         this.name = name;
         this.date = date;
-        this.process = stage;
+        this.process = process;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -124,12 +130,12 @@ public class JsonSurveyData {
         this.thY = thY;
     }
 
-    public String getStage() {
+    public String getProcess() {
         return process;
     }
 
-    public void setStage(String stage) {
-        this.process = stage;
+    public void setProcess(String process) {
+        this.process = process;
     }
     
 

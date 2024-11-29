@@ -7,10 +7,13 @@ package com.kinsoku.kingserver;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.websocket.*;
+import javax.websocket.EncodeException;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 /**
@@ -18,7 +21,7 @@ import javax.websocket.server.ServerEndpoint;
  * @author n_otsuka
  */
 @ServerEndpoint(value="/endpoint", encoders = {JsonSurveyDataEncoder.class}, decoders = {JsonSurveyDataDecoder.class})
-public class KingServer {
+public class KingsServer {
 
     private static Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
     // 現在のセッションを記録
@@ -38,7 +41,7 @@ public class KingServer {
     public void onClose(Session peer) {
         peers.remove(peer);
     }
-
+    
     /**
      *
      * @param peer
@@ -49,12 +52,8 @@ public class KingServer {
         peers.add(peer);
         /* セッション確立時の処理 */
         this.currentSession = peer;
-        try {
-            this.currentSession.getBasicRemote().sendText("Hello. Server time is " + new Date());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
-
+    
+    
 }

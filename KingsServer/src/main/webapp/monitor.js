@@ -21,8 +21,9 @@ let app = new PIXI.Application({
 // HTMLの<main id="app"></main>の中に上で作ったPIXIアプリケーション(app)のビュー(canvas)を突っ込む
 let el = document.getElementById('app');
 el.appendChild(app.view);
-let name = document.getElementById("name");
-let process = document.getElementById("process");
+let name = document.getElementById('name');
+let process = document.getElementById('process');
+
 
 // 座標軸
 var axisX = new PIXI.Graphics().lineStyle(2,0x000000).moveTo(0,200).lineTo(640,200);
@@ -47,20 +48,12 @@ redMark.pivot.y = -200;
 redMark.x = 0;
 redMark.y = 0;
 app.stage.addChild(redMark);
-updateView('{"name": "杭01", "process": "削孔", "difX": 100, "difY": 0 }');
 
-// websocket を作成する
-const socket = new WebSocket('ws://localhost:8080/kingserver/endpoint');
-// 接続する時にトリガーされる 
-socket.onopen = () => {   console.log('Connected to server'); }  // ここでメッセージ送信のロジックを追加 };
-// メッセージの受信時にトリガーされる 
-socket.onmessage = (event) => {   console.log(`Received: ${event.data}`); };
-// 接続中止時にトリガーされる 
-socket.onclose = () => {   console.log('Connection closed'); };
+updateView('{"name": "杭01", "process": "削孔", "difX": 30, "difY": 0}');
+            
 
 function updateView(surveyData) {
     console.log("updateView");
-    console.log(surveyData);
     var json = JSON.parse(surveyData);
 //    context.fillStyle = json.color;
     name.innerHTML = "杭番号:" + json.name;
@@ -68,6 +61,7 @@ function updateView(surveyData) {
     redMark.x = json.difX;
     redMark.y = json.difY;
 //    context.beginPath();
-//    context.arc(json.difX * 1000 + 500, json.difY * 1000 + 500, 5, 0, 2
+//    context.arc(json.difX * 1000 + 500, json.difY * 1000 + 500, 5, 0, 2 * Math.PI, false);
+//    context.fill();
+    
 }
-

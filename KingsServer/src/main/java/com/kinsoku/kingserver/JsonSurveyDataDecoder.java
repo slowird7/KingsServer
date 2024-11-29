@@ -25,7 +25,7 @@ import javax.websocket.EndpointConfig;
             JsonSurveyData surveyData = new JsonSurveyData(
                     jsonObject.getString("name")
                     ,jsonObject.getString("date")
-                    ,jsonObject.getString("stage")
+                    ,jsonObject.getString("process")
                     ,jsonObject.getJsonNumber("x").doubleValue()
                     ,jsonObject.getJsonNumber("y").doubleValue()
                     ,jsonObject.getJsonNumber("z").doubleValue()
@@ -51,14 +51,12 @@ import javax.websocket.EndpointConfig;
 
         @Override
         public void init(EndpointConfig ec) {
-            System.out.println("init>");
+            System.out.println("JsonSurveyDataDecoder> init");
         }
 
         @Override
         public void destroy() {
-            System.out.println("destroy");
+            System.out.println("JsonSurveyDataDecoder> destroy");
         }
 
     }
-    
-    

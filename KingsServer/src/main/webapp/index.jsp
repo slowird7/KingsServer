@@ -8,13 +8,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.3/pixi.min.js"></script>
     </head>
     <body>
-        <%=new java.util.Date()%>
         <h1>杭打キングモニタ</h1>
+        <%=new java.util.Date()%><br>
         <name id="name"></name>
         <name id="process"></name>
         <main id="app">
         </main>
-        <!--script type="text/javascript" src="Websocket.js"></script-->
+        <name id="output"></name>
+        <script type="text/javascript" src="Websocket.js"></script>
         <script type="text/javascript" src="monitor.js"></script>
     </body>
 </html>

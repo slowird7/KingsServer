@@ -25,7 +25,7 @@ public class JsonSurveyDataEncoder implements javax.websocket.Encoder.Text<JsonS
             g.writeStartObject()
                     .write("name", surveyData.getName())
                     .write("date", surveyData.getDate())
-                    .write("stage", surveyData.getStage())
+                    .write("process", surveyData.getProcess())
                     .write("x", surveyData.getX())
                     .write("y", surveyData.getY())
                     .write("z", surveyData.getZ())
@@ -41,12 +41,12 @@ public class JsonSurveyDataEncoder implements javax.websocket.Encoder.Text<JsonS
 
     @Override
     public void init(EndpointConfig ec) {
-        System.out.println("init");
+        System.out.println("JsonSurveyDataEncoder> init");
     }
 
     @Override
     public void destroy() {
-        System.out.println("destroy");
+        System.out.println("JsonSurveyDataEncoder> destroy");
     }
 
 }
