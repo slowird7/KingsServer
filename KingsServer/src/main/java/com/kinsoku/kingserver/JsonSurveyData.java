@@ -5,18 +5,6 @@
  */
 package com.kinsoku.kingserver;
 
-import java.io.StringReader;
-import java.io.StringWriter;
-import javax.json.Json;
-import javax.json.JsonException;
-import javax.json.JsonObject;
-import javax.json.stream.JsonGenerator;
-import javax.websocket.DecodeException;
-import javax.websocket.Decoder;
-import javax.websocket.EncodeException;
-import javax.websocket.Encoder;
-import javax.websocket.EndpointConfig;
-
 /**
  *
  * @author n_otsuka
@@ -25,29 +13,24 @@ public class JsonSurveyData {
     
     private String name;
     private String date;
-    private String process;
+    private String section;
     private double x;
     private double y;
     private double z;
     private double difX;
     private double difY;
     private double difZ;
-    private double thX;
-    private double thY;
-
     // surveyX, surveyY, surveyZ, difX_MM / 1000., difY_MM / 1000., difZ_MM / 1000., katamukiX, katamukiY, name, ""
-    public JsonSurveyData(String name, String date, String process, double x, double y, double z, double difX, double difY, double difZ, double katamukiX, double katamukiY) {
+    public JsonSurveyData(String name, String date, String section, double x, double y, double z, double difX, double difY, double difZ) {
         this.name = name;
         this.date = date;
-        this.process = process;
+        this.section = section;
         this.x = x;
         this.y = y;
         this.z = z;
         this.difX = difX;
         this.difY = difY;
         this.difZ = difZ;
-        this.thX = thX;
-        this.thY = thY;
     }
 
     public String getName() {
@@ -114,28 +97,12 @@ public class JsonSurveyData {
         this.difZ = difZ;
     }
 
-    public double getThX() {
-        return thX;
+    public String getSection() {
+        return section;
     }
 
-    public void setThX(double thX) {
-        this.thX = thX;
-    }
-
-    public double getThY() {
-        return thY;
-    }
-
-    public void setThY(double thY) {
-        this.thY = thY;
-    }
-
-    public String getProcess() {
-        return process;
-    }
-
-    public void setProcess(String process) {
-        this.process = process;
+    public void setSection(String section) {
+        this.section = section;
     }
     
 

@@ -25,15 +25,13 @@ import javax.websocket.EndpointConfig;
             JsonSurveyData surveyData = new JsonSurveyData(
                     jsonObject.getString("name")
                     ,jsonObject.getString("date")
-                    ,jsonObject.getString("process")
+                    ,jsonObject.getString("section")
                     ,jsonObject.getJsonNumber("x").doubleValue()
                     ,jsonObject.getJsonNumber("y").doubleValue()
                     ,jsonObject.getJsonNumber("z").doubleValue()
                     ,jsonObject.getJsonNumber("difX").doubleValue()
                     ,jsonObject.getJsonNumber("difY").doubleValue()
                     ,jsonObject.getJsonNumber("difZ").doubleValue()
-                    ,jsonObject.getJsonNumber("thX").doubleValue()
-                    ,jsonObject.getJsonNumber("thY").doubleValue()
             );
             return  surveyData; //new JsonSurveyData();
         }

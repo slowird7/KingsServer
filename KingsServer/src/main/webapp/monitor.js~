@@ -60,8 +60,8 @@ function updateView(surveyData) {
     name.innerHTML = "杭番号:" + json.name;
     section.innerHTML = "工程:" + json.section;
     date.innerHTML = "日付:" + json.date;
-    redMark.x = json.difX * 1000;
-    redMark.y = json.difY * 1000;
+    redMark.x = json.difX;
+    redMark.y = json.difY;
 //    context.beginPath();
 //    context.arc(json.difX * 1000 + 500, json.difY * 1000 + 500, 5, 0, 2 * Math.PI, false);
 //    context.fill();
