@@ -1,8 +1,4 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import {updateView} from './monitor.js';
 
 var pathArray = document.location.pathname.split('/');
 pathArray.pop(); // Remove the last element to get the parent path
@@ -37,8 +33,7 @@ function sendText(json) {
 }
                 
 function onMessage(evt) {
-    console.log("received: " + evt.data);
-    var obj = JSON.parse(evt.data);
+//    console.log("received: " + evt.data);
     updateView(evt.data);
 }
 

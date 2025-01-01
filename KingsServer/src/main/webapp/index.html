@@ -17,14 +17,13 @@
         <name id="selMeasureMode"></name>
         <main id="appSpace">
         </main>
-        <script type="text/javascript">
-        </script>
-        <script type="module">
+        <script type="module" src="monitor.js"></script>
+        <!--script type="module">
             // Create the application helper and add its render target to the page
             await app.init({ width: 640, height: 360, backgroundColor: 0x1099bb });
             document.getElementById('appSpace').appendChild(app.canvas);;
             init();
-        </script>
+        </script-->
 
         <button type="button" id="teishi">計測開始</button>
         <button type="button" id="kaiten">回転</button>
@@ -32,7 +31,6 @@
         <input type="text" id="txtRot"/>
         <br>
         <name id="output"></name>
-        <script type="text/javascript" src="Websocket.js"></script>
-        <script type="text/javascript" src="monitor.js"></script>
+        <script type="module" src="Websocket.js"></script>
     </body>
 </html>

@@ -48,7 +48,7 @@ public class KingsServer {
      */
     @OnOpen
     public void onOpen(Session peer) {
-        System.err.println("[セッション確立]");
+        System.err.println("[セッション確立しました]");
         peers.add(peer);
         /* セッション確立時の処理 */
         this.currentSession = peer;

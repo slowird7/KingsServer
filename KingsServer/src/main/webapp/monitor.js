@@ -1,9 +1,16 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//import { Application, Graphics } from '/pixi.js';
+const appWidth = 640;
+const appHeight = 640;
 const app = new PIXI.Application();
+await app.init({ width: appWidth, height: appWidth, backgroundColor: 0xdddddd });
+const cx = app.canvas.width / 2.0;
+const cy = app.canvas.height / 2.0;
+const container = new PIXI.Container();
+container.pivot.x = cx;
+container.pivot.y = cy;
+app.stage.addChild(container);
+document.getElementById('appSpace').appendChild(app.canvas);;
+
 const FONTSIZE = 70;
 const FONTOFFSET = FONTSIZE / 2;
 const compass = ("北", "東", "南", "西");
@@ -20,7 +27,7 @@ const indiators = (
     // 各種アイテムの表示位置
 const posX = (30, 260);
 const posY = (130, 200, 270, 340, 410);
-let gc = new PIXI.GraphicsContext();
+
 
 let fMX = 0; // マウス用
 let fMY = 0;
@@ -41,50 +48,64 @@ let rot = document.getElementById('txtRot');
 let selMeasureMode = document.getElementById('selMeasureMode');
 let section = document.getElementById('section');
 // Create the application helper and add its render target to the page
-await app.init({ width: 640, height: 360, backgroundColor: 0x1099bb });
-document.getElementById('appSpace').appendChild(app.canvas);;
 
 let date = document.getElementById('date');
 
+let scaleD = scale;
+let outR = 10; // 外円の半径
+let inR = 5; // 内円の半径
+let point = 0.75; // 赤丸
+
+/*
+* 外側の円を描画する
+*/
+let outerCircle = new PIXI.Graphics().circle(0, 0, outR * scaleD); // 左上x, y, 幅、高さ
+outerCircle.stroke({color: 0xff7f26, width: 5});
+outerCircle.fill(0xffff80);
+//outerCircle.pivot.x = -320;
+//outerCircle.pivot.y = -200;
+container.addChild(outerCircle);
+
+/*
+* 内側の円を描画する
+*/
+let innerCircle = new PIXI.Graphics().circle(0, 0, inR * scaleD);
+innerCircle.stroke(0x00A2E8);
+innerCircle.fill(0x80FFFF); //gc.setFill(Color.rgb(128, 255, 255));
+//innerCircle.pivot.x = -320;
+//innerCircle.pivot.y = -200;
+container.addChild(innerCircle);
+
+
 // 座標軸
-let axisX = new PIXI.Graphics().setStrokeStyle({color: 0x000000, width: 5, alignment: 0.5}).moveTo(0,200).lineTo(640,200);
-app.stage.addChild(axisX);
-let axisY = new PIXI.Graphics().setStrokeStyle({color: 0x000000, width: 5, alignment: 0.5}).moveTo(320,0).lineTo(320,400);
-app.stage.addChild(axisY);
-let outerLimit = new PIXI.Graphics().setStrokeStyle({color: 0x000000, width: 5}).drawCircle(0,0,20);
-outerLimit.pivot.x = -320;
-outerLimit.pivot.y = -200;
-outerLimit.x = 0;
-outerLimit.y = 0;
-app.stage.addChild(outerLimit);
+let axis = new PIXI.Graphics();
+axis.moveTo(-appWidth, 0).lineTo(appWidth,0);
+axis.moveTo(0, -appHeight).lineTo(0, appHeight);
+axis.stroke({color: 0x000000, width: 2});
+container.addChild(axis);
 
 // 赤丸を作る
-let redMark = new PIXI.Graphics()       // メソッドチェーンで描画するので、;(セミコロン)を付けない  
-.beginFill(0xff0000)                    // endFill()までの描画に対する塗りつぶし色指定
-.drawCircle(0,0,10)                     // (中心のx座標, 中心のy座標, 幅, 高さ)
-.endFill();                             // ここまでに描いた図形を塗りつぶす
-
-// 基準点を設定(px) 図形(PIXI.Graphicsにはpivotはないので注意)
-//redMark.setAnchor(-50,-50);
-redMark.pivot.x = -320;
-redMark.pivot.y = -200;
-redMark.x = 0;
-redMark.y = 0;
-app.stage.addChild(redMark);
+let redMark = new PIXI.Graphics().circle(0,0,10).fill(0xff0000);
+//redMark.pivot.x = -320;
+//redMark.pivot.y = -200;
+//redMark.x = 0;
+//redMark.y = 0;
+container.addChild(redMark);
 
 //updateView('{"name": "柱01", "date": "2024-12-08 12:00:00", "section": "1節", "difX": 0, "difY": 0}');
 
 function updateView(surveyData) {
     console.log("updateView");
-    let cx = app.canvas.width / 2.0;
-    let cy = app.canvas.height / 2.0;
-    let outR = 10; // 外円の半径
-    let inR = 5; // 内円の半径
-    let point = 0.75; // 赤丸
 
+    let json = JSON.parse(surveyData);
+//    context.fillStyle = json.color;
+    difX = json.difX;
+    difY = json.difY;
+    name.innerHTML = "杭番号:" + json.name;
+    section.innerHTML = "工程:" + json.section;
+    date.innerHTML = "日付:" + json.date;
     //Rotate rotScreen = new Rotate(angle);
 
-    let scaleD = scale;
     let dif = Math.max(Math.abs(difX), Math.abs(difY));
     if (dif <= 12) {
         outR = 10;
@@ -92,40 +113,43 @@ function updateView(surveyData) {
         point = 0.75;
     } else {
         let n = 30 / 10;
-        scaleD = 30 / n * app.height / 500.0 * 1.1;
+        scaleD = 30 / n * appHeight / 500.0 * 1.1;
         outR = 10 * n;
         inR = 5;
         if (dif > 34) {
             let n2 = 50 / 10;
-            scaleD = 30 / n2 * app.height / 500.0 * 1.1;
+            scaleD = 30 / n2 * appHeight / 500.0 * 1.1;
             outR = 10 * n2;
             inR = 4;
         }
     }
 
+    /*
+    * 外側の円を描画する
+    */
+    outerCircle.clear(); // 左上x, y, 幅、高さ
+    outerCircle.circle(0, 0, outR * scaleD); // 左上x, y, 幅、高さ
+    //outerCircle.pivot.x = -320;
+    //outerCircle.pivot.y = -200;
+    outerCircle.stroke({color: 0xff7f26, width: 5});
+    outerCircle.fill(0xffff80);
 
     /*
-        * 外側の円を描画する
-        */
-    gc.setStrokeStyle({color: 0xff7F26, width: 5, alignment: 0.5});
-    gc.setFillStyle( 0xffff80);
-    gc.circle(cx - outR * scaleD / 2, cy - outR * scaleD / 2, outR * scaleD, outR * scaleD); // 左上x, y, 幅、高さ
-    //gc.fillOval(cx - outR * scaleD / 2, cy - outR * scaleD / 2, outR * scaleD, outR * scaleD);
+    * 内側の円を描画する
+    */
+    innerCircle.clear();
+    innerCircle.circle(0, 0, inR * scaleD);
+    //innerCircle.pivot.x = -320;
+    //innerCircle.pivot.y = -200;
+    innerCircle.stroke(0x00A2E8);
+    innerCircle.fill(0x80FFFF); //gc.setFill(Color.rgb(128, 255, 255));
 
     /*
-        * 内側の円を描画する
-        */
-//    gc.setLineDashes(5.0, 10.0);
-    gc.setStrokeStyle(0x00A2E8);
-    gc.setFillStyle(0x80FFFF); //gc.setFill(Color.rgb(128, 255, 255));
-    gc.circle(cx - inR * scaleD / 2, cy - inR * scaleD / 2, inR * scaleD, inR * scaleD);
-    //gc.fillOval(cx - inR * scaleD / 2, cy - inR * scaleD / 2, inR * scaleD, inR * scaleD);
-
-    /*
-        * 測点の赤丸を描画する
-        *
-        */
-    gc.setFillStyle(0xff0000);
+    * 測点の赤丸を描画する
+    *
+    */
+    redMark.x = difX * 1000;
+    redMark.y = difY * 1000;
 
   //  gc.setLineDashes(0);
     //gc.setLineWidth(2);
@@ -134,6 +158,7 @@ function updateView(surveyData) {
     // gc.fillOval(cx + p.getX() - (point * scale) / 2, cy + p.getY() - (point * scale) / 2, point * scale, point * scale);
     // gc.setStroke(Color.rgb(0, 0, 0));
     // gc.setLineWidth(0.5);
+
     // gc.strokeRect(cx - outR * scaleD / 2 - 10, cy - outR * scaleD / 2 - 10, outR * scaleD + 20, outR * scaleD + 20);
     // gc.strokeLine(cx, 0, cx, gc.getCanvas().getHeight());
     // gc.strokeLine(0, cy, gc.getCanvas().getWidth(), cy);
@@ -227,13 +252,6 @@ function updateView(surveyData) {
     //     gc.fillText(java.text.MessageFormat.format(rb.getString("L={0}"), new Object[]{distance}), gc.getCanvas().getWidth() - 360, 140); //NOI18N
     // }
 
-    let json = JSON.parse(surveyData);
-//    context.fillStyle = json.color;
-    name.innerHTML = "杭番号:" + json.name;
-    section.innerHTML = "工程:" + json.section;
-    date.innerHTML = "日付:" + json.date;
-    redMark.x = json.difX * 1000;
-    redMark.y = json.difY * 1000;
 //    context.beginPath();
 //    context.arc(json.difX * 1000 + 500, json.difY * 1000 + 500, 5, 0, 2 * Math.PI, false);
 //    context.fill();
@@ -267,4 +285,12 @@ function indicator(angle) {
         return indiators[0];
     }
 }
+
+document.getElementById('kaiten').addEventListener("click", () => {
+    angle = (angle + 90) % 360;
+    container.angle = angle;
+});
+
+export { updateView };
+
 
