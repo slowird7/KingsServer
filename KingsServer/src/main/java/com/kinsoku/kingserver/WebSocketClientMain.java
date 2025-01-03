@@ -56,7 +56,7 @@ public class WebSocketClientMain {
 	@OnOpen
 	public void onOpen(Session session) {
 		/* セッション確立時の処理 */
-		System.err.println("[セッション確立]");
+		System.err.println("[セッション確立したぜ]");
 	}
 
 }

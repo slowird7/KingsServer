@@ -1,3 +1,11 @@
+# 実行方法その1
+Run - debug "jettyServer" : webapp/index.html が https://localhost/index.html でアクセスできる
+Websocket は使えない
+
+
+
+以下はオリジナルの Readme.md 
+===============================================================================
 # copy of ../hello-java-websocket/README.md 
 
 # hello-java-websocket

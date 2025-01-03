@@ -87,6 +87,12 @@
             <artifactId>log4j-api</artifactId>
             <version>2.17.1</version>
         </dependency>
+        <!-- https://qiita.com/riversun/items/2909019123b28471ea79 -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>9.4.14.v20181114</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.glassfish.tyrus.bundles/tyrus-standalone-client -->
         <dependency>
             <groupId>org.glassfish.tyrus.bundles</groupId>

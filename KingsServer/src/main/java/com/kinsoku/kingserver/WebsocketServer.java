@@ -21,7 +21,7 @@ import javax.websocket.server.ServerEndpoint;
  * @author n_otsuka
  */
 @ServerEndpoint(value="/endpoint", encoders = {JsonSurveyDataEncoder.class}, decoders = {JsonSurveyDataDecoder.class})
-public class KingsServer {
+public class WebsocketServer {
 
     private static Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
     // 現在のセッションを記録
