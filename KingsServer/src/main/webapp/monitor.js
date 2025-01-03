@@ -2,13 +2,18 @@
 const appWidth = 640;
 const appHeight = 640;
 const app = new PIXI.Application();
-await app.init({ width: appWidth, height: appWidth, backgroundColor: 0xdddddd });
+await app.init({ width: appWidth, height: appWidth, backgroundColor: 0x808080 });
 const cx = app.canvas.width / 2.0;
 const cy = app.canvas.height / 2.0;
 const container = new PIXI.Container();
-container.pivot.x = cx;
-container.pivot.y = cy;
 app.stage.addChild(container);
+    // https://pixijs.com/8.x/examples/basic/container.html
+    // Move the container to the center
+    container.x = app.screen.width / 2;
+    container.y = app.screen.height / 2;
+    // Center the bunny sprites in local container coordinates
+    container.pivot.x = container.width / 2;
+    container.pivot.y = container.height / 2;
 document.getElementById('appSpace').appendChild(app.canvas);;
 
 const FONTSIZE = 70;
@@ -39,7 +44,7 @@ let difY = 0;
 let difZ = 0;
 // 実測
 let mz = 0;
-let scale = 30.0;
+let scale = 30 * appHeight / 500.0 * 1.1;
 let selection = true;
 let name = document.getElementById('name');
 let angle = 0.;
@@ -99,8 +104,8 @@ function updateView(surveyData) {
 
     let json = JSON.parse(surveyData);
 //    context.fillStyle = json.color;
-    difX = json.difX;
-    difY = json.difY;
+    difX = json.difX * 1000;
+    difY = json.difY * 1000;
     name.innerHTML = "杭番号:" + json.name;
     section.innerHTML = "工程:" + json.section;
     date.innerHTML = "日付:" + json.date;
@@ -148,8 +153,8 @@ function updateView(surveyData) {
     * 測点の赤丸を描画する
     *
     */
-    redMark.x = difX * 1000;
-    redMark.y = difY * 1000;
+    redMark.x = difX * scaleD / 2;
+    redMark.y = difY * scaleD / 2;
 
   //  gc.setLineDashes(0);
     //gc.setLineWidth(2);
