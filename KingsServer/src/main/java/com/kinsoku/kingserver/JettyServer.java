@@ -5,7 +5,8 @@ import org.eclipse.jetty.ee10.servlet.DefaultServlet;
 import org.eclipse.jetty.ee10.servlet.ServletContextHandler;
 import org.eclipse.jetty.ee10.servlet.ServletHolder;
 import org.eclipse.jetty.ee10.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer;
-import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.*;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 import java.net.URL;
 import java.time.Duration;
@@ -31,19 +32,44 @@ public class JettyServer {
      */
     public static Server newServer(int port)
     {
+        int httpPort = 8080;
+        int httpsPort = 8443;
+
         Server server = new Server(port);
 
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
         servletContextHandler.setContextPath("/kingserver");
         server.setHandler(servletContextHandler);
 
+        // following code is from jetty-examples/embedded/ee10-servlet-security/.../ServletTransportGuaranteeExample
+        SslContextFactory.Server sslContextFactory = new SslContextFactory.Server();
+        // オレオレ認証証明書の作り方は https://qiita.com/riversun/items/2909019123b28471ea79
+        /* keytool -genkey -dname "cn=localhost, ou=Example div., o=Example Inc., l=Minato-ku, st=Tokyo, c=JP" -alias jetty -keystore mykeystore.jks -storepass mypassword -keypass mypassword -keyalg RSA -keysize 2048 -sigalg SHA256withRSA -validity 3650 -ext SAN=dns:192.168.11.8
+        */
+        sslContextFactory.setKeyStorePath(System.getProperty("user.dir") + "/KingsServer/mykeystore.jks");
+        sslContextFactory.setKeyStorePassword("mypassword");
+
+        // Setup HTTPS Configuration
+        HttpConfiguration httpsConf = new HttpConfiguration();
+        httpsConf.setSecurePort(httpsPort);
+        httpsConf.setSecureScheme("https");
+        httpsConf.addCustomizer(new SecureRequestCustomizer()); // adds ssl info to request object
+
+        // Establish the HTTPS ServerConnector
+        ServerConnector httpsConnector = new ServerConnector(server,
+                new SslConnectionFactory(sslContextFactory, "http/1.1"),
+                new HttpConnectionFactory(httpsConf));
+        httpsConnector.setPort(httpsPort);
+
+        server.addConnector(httpsConnector);
+
+
         // Add javax.websocket support
         JakartaWebSocketServletContainerInitializer.configure(servletContextHandler, (context, container) ->
         {
-            // Add echo endpoint to server container
+            // Add websocket endpoint to server container
             ServerEndpointConfig config = ServerEndpointConfig.Builder.create(WebsocketEndpoint.class, "/endpoint").build();
             container.setDefaultMaxSessionIdleTimeout(10*60*1000);  // 10 minutes
-
             container.addEndpoint(config);
         });
 
