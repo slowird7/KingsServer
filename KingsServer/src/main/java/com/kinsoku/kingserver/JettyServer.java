@@ -34,14 +34,14 @@ public class JettyServer {
         Server server = new Server(port);
 
         ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        servletContextHandler.setContextPath("/");
+        servletContextHandler.setContextPath("/kingserver");
         server.setHandler(servletContextHandler);
 
         // Add javax.websocket support
         JakartaWebSocketServletContainerInitializer.configure(servletContextHandler, (context, container) ->
         {
             // Add echo endpoint to server container
-            ServerEndpointConfig config = ServerEndpointConfig.Builder.create(WebsocketEndpoint.class, "/kingserver/endpoint").build();
+            ServerEndpointConfig config = ServerEndpointConfig.Builder.create(WebsocketEndpoint.class, "/endpoint").build();
             container.setDefaultMaxSessionIdleTimeout(10*60*1000);  // 10 minutes
 
             container.addEndpoint(config);
