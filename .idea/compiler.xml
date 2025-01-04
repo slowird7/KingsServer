@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="KingsServer" target="1.8" />
+      <module name="KingsServer" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

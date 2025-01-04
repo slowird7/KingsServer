@@ -9,19 +9,18 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import javax.websocket.EncodeException;
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
+import jakarta.websocket.*;
+import jakarta.websocket.server.ServerEndpoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  *
  * @author n_otsuka
  */
 @ServerEndpoint(value="/endpoint", encoders = {JsonSurveyDataEncoder.class}, decoders = {JsonSurveyDataDecoder.class})
-public class WebsocketServer {
+public class WebsocketEndpoint {
 
     private static Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
     // 現在のセッションを記録

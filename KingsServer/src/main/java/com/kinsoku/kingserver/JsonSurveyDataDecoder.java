@@ -5,22 +5,22 @@
  */
 package com.kinsoku.kingserver;
 
-import java.io.StringReader;
+import jakarta.websocket.EndpointConfig;
+
 import javax.json.Json;
 import javax.json.JsonException;
 import javax.json.JsonObject;
-import javax.websocket.DecodeException;
-import javax.websocket.EndpointConfig;
+import java.io.StringReader;
 
 /**
  *
  * @author otsuka
  */
-    public class JsonSurveyDataDecoder implements javax.websocket.Decoder.Text<JsonSurveyData> {
+    public class JsonSurveyDataDecoder implements jakarta.websocket.Decoder.Text<JsonSurveyData> {
 
         // String name, String date, String stage, double x, double y, double z, double difX, double difY, double difZ, double katamukiX, double katamukiY
         @Override
-        public JsonSurveyData decode(String string) throws DecodeException {
+        public JsonSurveyData decode(String string) {
             JsonObject jsonObject = Json.createReader(new StringReader(string)).readObject();
             JsonSurveyData surveyData = new JsonSurveyData(
                     jsonObject.getString("name")
@@ -47,8 +47,9 @@ import javax.websocket.EndpointConfig;
             }
          }
 
-        @Override
-        public void init(EndpointConfig ec) {
+
+         @Override
+         public void init(EndpointConfig ec) {
             System.out.println("JsonSurveyDataDecoder> init");
         }
 

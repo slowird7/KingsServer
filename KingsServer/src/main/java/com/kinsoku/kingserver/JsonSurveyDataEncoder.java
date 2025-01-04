@@ -7,15 +7,15 @@ package com.kinsoku.kingserver;
 
 import javax.json.Json;
 import javax.json.stream.JsonGenerator;
-import javax.websocket.EncodeException;
-import javax.websocket.EndpointConfig;
+import jakarta.websocket.EncodeException;
+import jakarta.websocket.EndpointConfig;
 import java.io.StringWriter;
 
 /**
  *
  * @author n_otsuka
  */
-public class JsonSurveyDataEncoder implements javax.websocket.Encoder.Text<JsonSurveyData> {
+public class JsonSurveyDataEncoder implements jakarta.websocket.Encoder.Text<JsonSurveyData> {
 
     @Override
     public void init(EndpointConfig ec) {
