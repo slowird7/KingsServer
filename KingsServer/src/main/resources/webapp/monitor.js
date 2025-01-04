@@ -1,4 +1,6 @@
 //import * as PIXI from 'pixi.js';
+import {bearing_DEG} from './compass.js';
+
 const app = new PIXI.Application();
 //await app.init({ width: appWidth, height: appHeight, backgroundColor: 0xF0F0F0 });
 await app.init({ resizeTo: window, backgroundColor: 0xF0F0F0 });
@@ -34,7 +36,7 @@ const indiators = [
 
 // 各種アイテムの表示位置
 const posX = [30, 260];
-const posY = [10, 40, 70, 100, 130];
+const posY = [10, 40, 70, 100, 130, 160];
 
 let angleStart = 0;
 let angleEnd = 0;
@@ -54,8 +56,8 @@ let scale = 10 * appHeight / 500.0 * 1.1;
 let selection = true;
 let angle = 0.;
 let north = -90;
-let rot = document.getElementById('txtRot');
 let selMeasureMode = document.getElementById('selMeasureMode');
+
 // Create the application helper and add its render target to the page
 
 let scaleD = scale;
@@ -136,7 +138,12 @@ zureXX.y = posY[3];
 const zureYY = new PIXI.Text({ text: "---", fill: 0x000000, fontSize: 20, fontFamily: 'Arial' });
 zureYY.x = posX[0];
 zureYY.y = posY[4];
-app.stage.addChild(date, section2, name2, zureXX, zureYY);
+// 方角
+const bearing = new PIXI.Text({ text: "0", fill: 0x000000, fontSize: 20, fontFamily: 'Arial' });
+bearing.x = posX[0];
+bearing.y = posY[5];
+app.stage.addChild(date, section2, name2, zureXX, zureYY, bearing);
+
 
 updateView('{"name": "柱01", "date": "2024-12-08 12:00:00", "section": "1節", "difX": 0, "difY": -0.01}');
 
@@ -148,6 +155,9 @@ function updateView(newData) {
 function _updateView() {
 
     console.log("updateView");
+    if (document.getElementById('autorotate').checked) {
+        angle = bearing_DEG;
+    }
     container.angle = angle;
 
     let json = JSON.parse(surveyData);
@@ -242,6 +252,7 @@ function _updateView() {
         zureYY.text = (difColumnY >= 0 ? ind[2] : ind[3]) + Math.abs(difColumnY);
         // }
 
+        bearing.text = bearing_DEG;
         // 画面右下に鉛直方向ずれ量を表示する
         // if (Settei2SceneController.getZEnable()) {
         //     if (difZ != 0) {
@@ -296,21 +307,6 @@ function indicator(angle) {
         return indiators[0];
     }
 }
-
-document.getElementById('kaiten').addEventListener("click", () => {
-    angle = (angle + 90) % 360;
-    container.angle = angle;
-    _updateView();
-
-});
-
-document.getElementById('chousei').addEventListener("click", () => {
-    if (Number(document.getElementById('txtRot').value) != 0) {
-        angle = Number(document.getElementById('txtRot').value) % 360;
-        container.angle = angle;
-        _updateView();
-    }
-});
 
 let dragging = false;
 

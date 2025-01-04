@@ -18,12 +18,14 @@
   </main>
   <script type="module" src="monitor.js"></script>
   <button type="button" id="teishi">計測開始</button>
-  <button type="button" id="kaiten">回転</button>
-  <button type="button" id="chousei">調整</button>
-  <input type="text" id="txtRot" />
+  <input type="checkbox" id="autorotate" name="autorotate" checked />
+  <label for="autorotate">コンパス</label>
+  </div>
+
   <br>
   <name id="output"></name>
   <script type="module" src="Websocket.js"></script>
+  <script type="module" src="compass.js"></script>
 </body>
 
 </html>
