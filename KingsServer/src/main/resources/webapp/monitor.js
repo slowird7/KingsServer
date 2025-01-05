@@ -1,9 +1,11 @@
 //import * as PIXI from 'pixi.js';
+//import { Ticker } from 'pixi.js';
+//import { autoDetectRenderer, Container } from 'pixi.js';
 import {bearing_DEG} from './compass.js';
 
 const app = new PIXI.Application();
 //await app.init({ width: appWidth, height: appHeight, backgroundColor: 0xF0F0F0 });
-await app.init({ resizeTo: window, backgroundColor: 0xF0F0F0 });
+await app.init({ resizeTo: document.getElementById('appSpace'), backgroundColor: 0xF0F0F0 });
 document.getElementById('appSpace').appendChild(app.canvas);;
 
 const container = new PIXI.Container();
@@ -126,24 +128,25 @@ const date = new PIXI.Text({ text: '', fill: 0x000000, fontSize: 20, fontFamily:
 date.x = posX[0];
 date.y = posY[0];
 
-const section2 = new PIXI.Text({ text: "節", fill: 0x000000, fontSize: 20, fontFamily: 'Arial' });
-section2.x = posX[0];
-section2.y = posY[1];
 const name2 = new PIXI.Text({ text: "杭番号", fill: 0x000000, fontSize: 20, fontFamily: 'Arial' });
 name2.x = posX[0];
-name2.y = posY[2];
+name2.y = posY[1];
 const zureXX = new PIXI.Text({ text: "---", fill: 0x000000, fontSize: 20, fontFamily: 'Arial' });
 zureXX.x = posX[0];
-zureXX.y = posY[3];
+zureXX.y = posY[2];
 const zureYY = new PIXI.Text({ text: "---", fill: 0x000000, fontSize: 20, fontFamily: 'Arial' });
 zureYY.x = posX[0];
-zureYY.y = posY[4];
+zureYY.y = posY[3];
 // 方角
-const bearing = new PIXI.Text({ text: "0", fill: 0x000000, fontSize: 20, fontFamily: 'Arial' });
-bearing.x = posX[0];
-bearing.y = posY[5];
-app.stage.addChild(date, section2, name2, zureXX, zureYY, bearing);
+//const bearing = new PIXI.Text({ text: "0", fill: 0x000000, fontSize: 20, fontFamily: 'Arial' });
+//bearing.x = posX[0];
+//bearing.y = posY[4];
+app.stage.addChild(date, name2, zureXX, zureYY);
 
+// Ticker for animation
+app.ticker.add(() => {
+    _updateView();
+});
 
 updateView('{"name": "柱01", "date": "2024-12-08 12:00:00", "section": "1節", "difX": 0, "difY": -0.01}');
 
@@ -155,8 +158,8 @@ function updateView(newData) {
 function _updateView() {
 
     console.log("updateView");
-    if (document.getElementById('autorotate').checked) {
-        angle = bearing_DEG;
+    if (document.getElementById('autorotate').checked  && !Number.isNaN(bearing_DEG) && bearing_DEG != -1) {
+        angle = -bearing_DEG;
     }
     container.angle = angle;
 
@@ -229,10 +232,9 @@ function _updateView() {
     /*
      * 画面左上に点名表示
      */
-    section2.text = json.section;
     // if (Command.isTsNoReply()) {
     // } else {
-    name2.text = json.name;
+    name2.text = json.section + ":" + json.name;
     // }
 
     // 画面左端にX軸／Y軸方向ずれ量を表示する
@@ -251,8 +253,6 @@ function _updateView() {
         zureXX.text = (difColumnX >= 0 ? ind[0] : ind[1]) + Math.abs(difColumnX);
         zureYY.text = (difColumnY >= 0 ? ind[2] : ind[3]) + Math.abs(difColumnY);
         // }
-
-        bearing.text = bearing_DEG;
         // 画面右下に鉛直方向ずれ量を表示する
         // if (Settei2SceneController.getZEnable()) {
         //     if (difZ != 0) {

@@ -13,6 +13,7 @@ function init() {
     // 簡易的なOS判定
     os = detectOSSimply();
     if (os == "iphone") {
+        window.alert("API 使用を許可してください");
         // safari用。DeviceOrientation APIの使用をユーザに許可して貰う
         document.querySelector("#permit").addEventListener("click", permitDeviceOrientationForSafari);
 
@@ -22,6 +23,7 @@ function init() {
             true
         );
     } else if (os == "android") {
+        document.querySelector("#permit").style.display = 'none';
         window.addEventListener(
             "deviceorientationabsolute",
             onDeviceOrientation,
@@ -113,6 +115,7 @@ function permitDeviceOrientationForSafari() {
                     "deviceorientation",
                     detectDirection
                 );
+                document.querySelector("#permit").style.display = 'none';
             }
         })
         .catch(console.error);
