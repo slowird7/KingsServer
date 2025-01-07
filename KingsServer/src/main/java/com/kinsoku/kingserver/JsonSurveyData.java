@@ -14,6 +14,7 @@ public class JsonSurveyData {
     private String name;
     private String date;
     private String section;
+    private double columnAngle;
     private double x;
     private double y;
     private double z;
@@ -21,10 +22,11 @@ public class JsonSurveyData {
     private double difY;
     private double difZ;
     // surveyX, surveyY, surveyZ, difX_MM / 1000., difY_MM / 1000., difZ_MM / 1000., katamukiX, katamukiY, name, ""
-    public JsonSurveyData(String name, String date, String section, double x, double y, double z, double difX, double difY, double difZ) {
+    public JsonSurveyData(String name, String date, String section, double columnAngle, double x, double y, double z, double difX, double difY, double difZ) {
         this.name = name;
         this.date = date;
         this.section = section;
+        this.columnAngle = columnAngle;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -104,7 +106,13 @@ public class JsonSurveyData {
     public void setSection(String section) {
         this.section = section;
     }
-    
 
-    
+    public double getColumnAngle() {
+        return columnAngle;
+    }
+
+    public void setColumnAngle(double difZ) {
+        this.columnAngle = difZ;
+    }
+
 }

@@ -31,6 +31,7 @@ public class JsonSurveyDataEncoder implements jakarta.websocket.Encoder.Text<Jso
                     .write("name", surveyData.getName())
                     .write("date", surveyData.getDate())
                     .write("section", surveyData.getSection())
+                    .write("columnAngle", surveyData.getColumnAngle())
                     .write("x", surveyData.getX())
                     .write("y", surveyData.getY())
                     .write("z", surveyData.getZ())

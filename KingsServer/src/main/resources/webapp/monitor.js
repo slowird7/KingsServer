@@ -66,6 +66,7 @@ let scaleD = scale;
 let outR = 10; // 外円の半径
 let inR = 5; // 内円の半径
 let point = 0.75; // 赤丸
+let columnSize = 200;
 
 /*
 * 外側の円を描画する
@@ -105,6 +106,13 @@ let redMark = new PIXI.Graphics().circle(0, 0, 10).fill(0xff0000);
 //redMark.x = 0;
 //redMark.y = 0;
 container.addChild(redMark);
+
+// 柱外形線
+const columnProfile = new PIXI.Graphics().roundRect(0, 0, columnSize, columnSize, 10);
+columnProfile.stroke({ color: 0x404040, width: 5 });;
+columnProfile.pivot.x = columnSize / 2;
+columnProfile.pivot.y = columnSize / 2;
+container.addChild(columnProfile);
 
 /*
  * 円周上の「東西南北」表示
@@ -148,7 +156,7 @@ app.ticker.add(() => {
     _updateView();
 });
 
-updateView('{"name": "柱01", "date": "2024-12-08 12:00:00", "section": "1節", "difX": 0, "difY": -0.01}');
+updateView('{"name": "柱01", "date": "2024-12-08 12:00:00", "section": "1節", "columnAngle": 30.0, "difX": 0, "difY": -0.01}');
 
 function updateView(newData) {
     surveyData = newData;
@@ -208,6 +216,7 @@ function _updateView() {
     innerCircle.stroke(0x00A2E8);
     innerCircle.fill(0x80FFFF); //gc.setFill(Color.rgb(128, 255, 255));
 
+    columnProfile.angle = json.columnAngle;
     /*
     * 測点の赤丸を描画する
     *

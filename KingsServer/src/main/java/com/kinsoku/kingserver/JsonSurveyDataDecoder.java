@@ -26,6 +26,7 @@ import java.io.StringReader;
                     jsonObject.getString("name")
                     ,jsonObject.getString("date")
                     ,jsonObject.getString("section")
+                    ,jsonObject.getJsonNumber("columnAngle").doubleValue()
                     ,jsonObject.getJsonNumber("x").doubleValue()
                     ,jsonObject.getJsonNumber("y").doubleValue()
                     ,jsonObject.getJsonNumber("z").doubleValue()
