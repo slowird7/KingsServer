@@ -165,7 +165,7 @@ function updateView(newData) {
 
 function _updateView() {
 
-    console.log("updateView");
+//    console.log("updateView");
     if (document.getElementById('autorotate').checked  && !Number.isNaN(bearing_DEG) && bearing_DEG != -1) {
         angle = -bearing_DEG;
     }
@@ -195,7 +195,7 @@ function _updateView() {
         }
     }
 
-    console.log("scaleD: " + scaleD, "difX: " + difX + ", difY: " + difY, "outR: " + outR, "inR: ", inR);
+//    console.log("scaleD: " + scaleD, "difX: " + difX + ", difY: " + difY, "outR: " + outR, "inR: ", inR);
     /*
     * 外側の円を描画する
     */
