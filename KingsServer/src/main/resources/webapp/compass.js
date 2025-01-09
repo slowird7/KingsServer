@@ -10,6 +10,7 @@ window.addEventListener("DOMContentLoaded", init);
 
 // 初期化
 function init() {
+    let autorotate = document.querySelector("#autorotate");
     // 簡易的なOS判定
     os = detectOSSimply();
     if (os == "iphone") {
@@ -22,6 +23,7 @@ function init() {
             onDeviceOrientation,
             true
         );
+        autorotate.checked = true;
     } else if (os == "android") {
         document.querySelector("#permit").style.display = 'none';
         window.addEventListener(
@@ -29,8 +31,11 @@ function init() {
             onDeviceOrientation,
             true
         );
+        autorotate.checked = true;
     } else{
         window.alert("この端末ではコンパス機能は使えません");
+        autorotate.checked = false;
+        autorotate.disabled = true;
     }
 }
 
@@ -115,7 +120,7 @@ function permitDeviceOrientationForSafari() {
                     "deviceorientation",
                     detectDirection
                 );
-                document.querySelector("#permit").style.display = 'none';
+                document.document.querySelector("#permit").style.display = 'none';
             }
         })
         .catch(console.error);
