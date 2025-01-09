@@ -1,5 +1,10 @@
 
 # /
-/KinsServer/target
 
-KingsServer/target/
+KingsServer/target/classes/
+
+KingsServer/target/maven-archiver/
+
+KingsServer/target/maven-status/
+
+KingsServer/target/KingsServer-1.0/
